@@ -8,6 +8,12 @@ import userRoutes from "./src/routes/user.routes";
 import staffRoutes from "./src/routes/Employee.routes";
 import freezerRoutes from "./src/routes/freezer.routes";
 import windowAreaRoutes from "./src/routes/windowArea.routes";
+import toiletRoutes from "./src/routes/toilet.routes";
+import binRoutes from "./src/routes/bin.routes";
+import setupRoutes from "./src/routes/setup.routes";
+import notificationRoutes from "./src/routes/notification.routes";
+import temperatureRoutes from "./src/routes/temperature.routes";
+import toiletCleanRoutes from "./src/routes/toiletClean.routes";
 
 dotenv.config();
 
@@ -20,6 +26,12 @@ app.use("/api/users", userRoutes);
 app.use("/api/staff", staffRoutes);
 app.use("/api/freezers", freezerRoutes);
 app.use("/api/window-areas", windowAreaRoutes);
+app.use("/api/toilets", toiletRoutes);
+app.use("/api/bins", binRoutes);
+app.use("/api/setup", setupRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/temperature", temperatureRoutes);
+app.use("/api/toilet-clean", toiletCleanRoutes);
 
 /* --------------------------------
    🔥 Seed Super Manager (No OTP)
