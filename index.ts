@@ -14,6 +14,11 @@ import setupRoutes from "./src/routes/setup.routes";
 import notificationRoutes from "./src/routes/notification.routes";
 import temperatureRoutes from "./src/routes/temperature.routes";
 import toiletCleanRoutes from "./src/routes/toiletClean.routes";
+import windowCleanRoutes from "./src/routes/windowClean.routes";
+import binRemovalRoutes from "./src/routes/binRemoval.routes";
+import todayLogsRoutes from "./src/routes/todayLogs.routes";
+import path from "path";
+
 
 dotenv.config();
 
@@ -32,7 +37,10 @@ app.use("/api/setup", setupRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/temperature", temperatureRoutes);
 app.use("/api/toilet-clean", toiletCleanRoutes);
-
+app.use("/api/window-clean", windowCleanRoutes);
+app.use("/api/bin-removal", binRemovalRoutes);
+app.use("/api/logs/today", todayLogsRoutes);
+app.use('/uploads', express.static(path.join(process.cwd(),"uploads")))
 /* --------------------------------
    🔥 Seed Super Manager (No OTP)
 ----------------------------------*/

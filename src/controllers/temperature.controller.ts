@@ -114,7 +114,7 @@ export const bulkCreateTemperatureLogs = async (
         value,
         date,
 
-        approved: false,
+        approved: true,
         changeStatus: false,
         changeHistory: [],
       });
@@ -214,6 +214,64 @@ export const updateTemperatureLog = async (
     res.json(log);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+/* --------------------------------
+   GET TEMPERATURE LOGS BY DATE RANGE
+---------------------------------*/
+export const getTemperatureLogsByDateRange = async (
+  req: AuthRequest,
+  res: Response
+) => {
+  try {
+    const { startDate, endDate } = req.query;
+
+    if (!startDate || !endDate) {
+      return res.status(400).json({
+        message: "startDate and endDate are required",
+      });
+    }
+
+    const user = req.user;
+
+    /* -----------------------------
+       BUILD DATE RANGE
+    ------------------------------*/
+    const start = new Date(startDate as string);
+    start.setHours(0, 0, 0, 0);
+
+    const end = new Date(endDate as string);
+    end.setHours(23, 59, 59, 999);
+
+    /* -----------------------------
+       BUILD FILTER
+    ------------------------------*/
+    const filter: any = {
+      date: { $gte: start, $lte: end },
+    };
+
+    /* If employee → only own logs */
+    if (user.role === "employee") {
+      filter.employeeId = user._id;
+    }
+
+    /* -----------------------------
+       FETCH DATA
+    ------------------------------*/
+    const logs = await TemperatureLog.find(filter)
+      .sort({ createdAt: -1 });
+
+    res.json({
+      startDate,
+      endDate,
+      count: logs.length,
+      data: logs,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      message: error.message,
+    });
   }
 };
 

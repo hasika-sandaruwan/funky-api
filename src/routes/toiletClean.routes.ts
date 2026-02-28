@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { protect } from "../middleware/auth.middleware";
+import { protect, allowRoles } from "../middleware/auth.middleware";
 import { uploadToiletImages } from "../middleware/upload.middleware";
-import { createToiletCleanLog } from "../controllers/toiletClean.controller";
+import { createToiletCleanLog, getToiletLogsByRange, deleteAllToiletHistory, approveToiletLog } from "../controllers/toiletClean.controller";
 
 const router = Router();
 
@@ -34,6 +34,27 @@ router.post(
   protect,
   uploadToiletImages.array("images", 10),
   createToiletCleanLog
+);
+
+router.get(
+  "/range",
+  protect,
+  allowRoles("employee", "supervisor", "manager"),
+  getToiletLogsByRange
+);
+
+router.put(
+  "/:id/approve",
+  protect,
+  allowRoles("supervisor", "manager"),
+  approveToiletLog
+);
+
+router.delete(
+  "/delete-all-history",
+  protect,
+  allowRoles("employee", "supervisor", "manager"),
+  deleteAllToiletHistory
 );
 
 export default router;

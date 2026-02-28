@@ -4,6 +4,7 @@ import {
   bulkCreateTemperatureLogs,
   updateTemperatureLog,
   getTemperatureLogs,
+  getTemperatureLogsByDateRange,
   approveTemperatureLog,
 } from "../controllers/temperature.controller";
 
@@ -35,7 +36,12 @@ router.post(
   allowRoles("employee", "supervisor", "manager"),
   createTemperatureLog
 );
-
+router.get(
+  "/range",
+  protect,
+  allowRoles("employee", "supervisor", "manager"),
+  getTemperatureLogsByDateRange
+);
 /* =========================================================
    BULK CREATE TEMPERATURE LOGS
 ========================================================= */

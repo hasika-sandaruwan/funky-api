@@ -3,7 +3,7 @@ import path from "path";
 import crypto from "crypto";
 import fs from "fs";
 
-const uploadPath = path.join(__dirname, "../uploads/toilets");
+const uploadPath = path.join(process.cwd(), "uploads/toilets");
 
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });

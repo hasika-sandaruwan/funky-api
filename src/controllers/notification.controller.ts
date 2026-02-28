@@ -9,9 +9,7 @@ export const getNotifications = async (
   res: Response
 ) => {
   try {
-    const notifications = await Notification.find({
-      user: req.user.id,
-    }).sort({ createdAt: -1 });
+    const notifications = await Notification.find().sort({ createdAt: -1 });
 
     res.json(notifications);
   } catch (error: any) {
